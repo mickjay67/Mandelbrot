@@ -16,5 +16,18 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
         }
+
+        private void draw_Click(object sender, EventArgs e)
+        {
+            //Mandlebrot goes here
+        }
+
+        //double click the image to zoom in
+
+        //right click to zoom back one layer
+
+        //ctrl click to draw julia
+
+        //arrow keys to pan around
     }
 }
