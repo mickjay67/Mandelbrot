@@ -40,6 +40,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(750, 500);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // draw
             // 
@@ -49,7 +50,7 @@
             this.draw.TabIndex = 1;
             this.draw.Text = "Draw Base Mandelbrot";
             this.draw.UseVisualStyleBackColor = true;
-            this.draw.Click += new System.EventHandler(this.draw_Click);
+            this.draw.Click += new System.EventHandler(this.Draw_Click);
             // 
             // Form1
             // 
@@ -58,10 +59,11 @@
             this.ClientSize = new System.Drawing.Size(1065, 540);
             this.Controls.Add(this.draw);
             this.Controls.Add(this.pictureBox1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "Mandelbrot";
+            this.Text = "Mandelbrot";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            
 
         }
 
