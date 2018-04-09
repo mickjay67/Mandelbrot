@@ -12,9 +12,10 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
-        double zoom = 1;
+        double Gzoom = 1;
         double centerX = 0;
         double centerY = 0;
+        int clicks = 0;
         int maxIter = 10000;
         Bitmap bmp = new Bitmap(750, 500);
         public Form1()
@@ -23,16 +24,19 @@ namespace WindowsFormsApp1
         }
 
         private void Draw_Click(object sender, EventArgs e)
-        {            
+        {
+            double locZoom = 0;
             int xRatio = 3;
             int yRatio = 2;
-            double xmax = xRatio * zoom + centerX;
-            double ymax = yRatio * zoom + centerY;
+            double xmax = xRatio * (Gzoom-locZoom) + centerX;
+            double ymax = yRatio * (Gzoom-locZoom) + centerY;
             double xmin = -1 * xmax + centerX;
             double ymin = -1 * ymax + centerY;
             double xRange = xmax * 2;
-            double yRange = ymax * 2;
-            pictureBox1.Image = Mandelbrot(xmax, xmin, ymax, ymin);            
+            double yRange = ymax * 2; 
+            pictureBox1.Image = Mandelbrot(xmax, xmin, ymax, ymin);
+            clicks = 0;
+            textBox1.Clear();
         }
 
         public Bitmap Mandelbrot(double xMax, double xMin, double yMax, double yMin) {                     
@@ -97,8 +101,38 @@ namespace WindowsFormsApp1
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
+            MouseEventArgs mouse = (MouseEventArgs)e;
+            int mpX = mouse.X;
+            int mpY = mouse.Y;
+            double mX = mpX/pictureBox1.Width *  
+            clicks++;
+            double locZoom = 1;
+            if (clicks < 5)
+            {
+                locZoom = clicks * 0.2;
+            }
+            else { locZoom = 0.95; }
+            int xRatio = 3;
+            int yRatio = 2;
+            double xmax = xRatio * (Gzoom - locZoom) + centerX;
+            double ymax = yRatio * (Gzoom - locZoom) + centerY;
+            centerX = mpX/(double)pictureBox1.Width * xmax;
+            centerY = mpY / (double)pictureBox1.Height * ymax;
+            xmax = xRatio * (Gzoom - locZoom) + centerX;
+            ymax = yRatio * (Gzoom - locZoom) + centerY;
+            Console.WriteLine(centerX+ " " + xmax + " " + ymax+" " +mpX+" " +pictureBox1.Width + " " + (mpX / pictureBox1.Width));
+            double xmin = -1 * xmax + centerX;
+            double ymin = -1 * ymax + centerY;
+            double xRange = xmax * 2;
+            double yRange = ymax * 2;
+            pictureBox1.Image = Mandelbrot(xmax, xmin, ymax, ymin);
+            textBox1.Clear();
+            if (clicks <= 5)
+            {
+                textBox1.AppendText(clicks.ToString());
+            }
+            else { textBox1.AppendText("MAX"); }
 
-          
         }
         //click the image to zoom in
 
